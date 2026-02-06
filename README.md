@@ -98,34 +98,70 @@ HTML / CSS
 
 🏗 Architecture Workflow
 Public Dataset
+
       ↓
+      
 MySQL Database
+
       ↓
+      
 Pandas DataFrame
+
       ↓
+      
 Random Forest Training
+
       ↓
+      
 Saved Model (.pkl)
+
       ↓
-Flask Web App
+      
+Flask Web Application
+
       ↓
-User Input → Prediction → Stored in MySQL
+      
+User Input
+
+      ↓
+      
+Prediction
+
+      ↓
+      
+Stored Back in MySQL
+
 
 📁 Project Structure
+
 heart-disease-prediction/
+
 │
+
 ├── app.py                 # Flask application
+
 ├── train_rf_model.py     # Random Forest training
+
 ├── upload_db.py          # CSV → MySQL
+
 ├── heart_rf_model.pkl    # Trained model
+
 ├── templates/
+
 │     └── index.html
+
 ├── screenshots/
+
 │     ├── ui.png
+
 │     ├── prediction.png
+
 │     └── database.png
+
 ├── README.md
+
 └── requirements.txt
+
 
 ▶ How to Run
 
