@@ -98,35 +98,27 @@ HTML / CSS
 
 🏗 Architecture Workflow
 Public Dataset
-
       ↓
       
 MySQL Database
-
       ↓
       
 Pandas DataFrame
-
       ↓
       
 Random Forest Training
-
       ↓
       
 Saved Model (.pkl)
-
       ↓
       
 Flask Web Application
-
       ↓
       
 User Input
-
       ↓
       
 Prediction
-
       ↓
       
 Stored Back in MySQL
