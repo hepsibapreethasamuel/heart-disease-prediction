@@ -1,10 +1,11 @@
-#❤️ Heart Disease Prediction System
+❤️ Heart Disease Prediction System
 
 An end-to-end Machine Learning web application for predicting heart disease using a Random Forest classifier, integrated with MySQL and deployed via Flask.
 
 The system combines ML prediction with real-world medical rule validation, ensuring extreme clinical values are handled safely instead of being treated as statistical outliers.
 
 ⚠️ Educational Project — Not intended for real medical diagnosis.
+
 
 ✨ Features
 
@@ -16,6 +17,7 @@ Binary classification (Heart Disease / No Heart Disease)
 
 Risk probability display
 
+
 🏥 Medical Rule Engine (Hybrid System)
 
 Critical clinical thresholds override ML
@@ -24,6 +26,7 @@ Prevents dangerous inputs from being treated as outliers
 
 High-risk & critical warnings
 
+
 🗄 Database Integration
 
 Dataset stored in MySQL
@@ -31,6 +34,7 @@ Dataset stored in MySQL
 Model trained directly from database
 
 User predictions logged back into MySQL
+
 
 🌐 Web Interface
 
@@ -42,9 +46,11 @@ Clean input form
 
 Risk feedback and lifestyle suggestions
 
+
 🧠 Hybrid Decision Architecture
 
 This project uses two decision layers:
+
 
 1️⃣ Medical Rule Engine (Primary Layer)
 
@@ -60,12 +66,14 @@ Exercise angina + severe chest pain
 
 Multiple blocked vessels
 
+
 If triggered:
 
 🚨 CRITICAL HEART RISK – Seek Immediate Medical Care
 
 
 These values are not treated as ML outliers.
+
 
 2️⃣ Machine Learning (Secondary Layer)
 
@@ -80,79 +88,65 @@ Risk probability displayed
 This creates a Hybrid Clinical + ML System.
 
 
+
 🧩 Tech Stack
 
-Python
+1. Python
 
-Flask
+2. Flask
 
-Scikit-learn
+3. Scikit-learn
 
-Pandas
+4. Pandas
 
-MySQL
+5. MySQL
 
-SQLAlchemy
+6. SQLAlchemy
 
-HTML / CSS
+7. HTML / CSS
+
 
 🏗 Architecture Workflow
+
 Public Dataset
-      ↓
-      
-MySQL Database
-      ↓
-      
-Pandas DataFrame
-      ↓
-      
-Random Forest Training
-      ↓
-      
-Saved Model (.pkl)
-      ↓
-      
-Flask Web Application
-      ↓
-      
-User Input
-      ↓
-      
-Prediction
-      ↓
-      
-Stored Back in MySQL
+│
+├── Uploaded to MySQL Database
+│
+├── Loaded into Pandas DataFrame
+│
+├── Random Forest Model Training
+│
+├── Model Saved (heart_rf_model.pkl)
+│
+├── Flask Web Application
+│
+├── User Inputs Clinical Data
+│
+├── Medical Rule Engine Validation
+│
+├── ML Prediction (Random Forest)
+│
+└── Prediction Stored Back in MySQL
 
 
 📁 Project Structure
 
 heart-disease-prediction/
-
 │
-
-├── app.py                 # Flask application
-
-├── train_rf_model.py     # Random Forest training
-
-├── upload_db.py          # CSV → MySQL
-
-├── heart_rf_model.pkl    # Trained model
-
+├── app.py                 # Flask web application
+├── train_rf_model.py     # Random Forest model training
+├── upload_db.py          # CSV dataset → MySQL
+├── heart_rf_model.pkl    # Trained ML model
+│
 ├── templates/
-
-│     └── index.html
-
+│   └── index.html        # Frontend UI
+│
 ├── screenshots/
-
-│     ├── ui.png
-
-│     ├── prediction.png
-
-│     └── database.png
-
-├── README.md
-
-└── requirements.txt
+│   ├── ui.png            # Web interface
+│   ├── prediction.png   # Prediction result
+│   └── database.png     # MySQL database view
+│
+└── README.md             # Project documentation
 
 
 ▶ How to Run
@@ -176,40 +170,44 @@ Open browser:
 
 http://127.0.0.1:8000
 
+
 📊 Dataset
 
 1025 patient records with 13 clinical attributes:
 
-Age
+1. Age
 
-Sex
+2. Sex
 
-Chest pain type
+3. Chest pain type
 
-Blood pressure
+4. Blood pressure
 
-Cholesterol
+5. Cholesterol
 
-Fasting blood sugar
+6. Fasting blood sugar
 
-ECG
+7. ECG
 
-Max heart rate
+8. Max heart rate
 
-Exercise angina
+9. Exercise angina
 
-ST depression
+10. ST depression
 
-ST slope
+11. ST slope
 
-Major vessels
+12. Major vessels
 
-Thalassemia
+13. Thalassemia
+
 
 Target:
 
 0 → No Heart Disease  
+
 1 → Heart Disease
+
 
 🏥 Medical Disclaimer
 
