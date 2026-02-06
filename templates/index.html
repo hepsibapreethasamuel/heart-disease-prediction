@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction - ML Model</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .accuracy-badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .info-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .predict-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .predict-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .reset-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .reset-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-container.success {
+            background: #f0f7ff;
+            border: 2px solid #667eea;
+            display: block;
+        }
+        
+        .result-container.danger {
+            background: #fff0f0;
+            border: 2px solid #ff6b6b;
+            display: block;
+        }
+        
+        .result-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .risk-percentage {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        .risk-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            padding: 12px;
+            background: #fff0f0;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>❤️ Heart Disease Prediction</h1>
+            <p>AI-Based Diagnostic Tool</p>
+        </div>
+        
+        <form id="predictionForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="age">Age (years)</label>
+                    <input type="number" id="age" name="age" min="1" max="120" required>
+                    <div class="info-text">e.g., 45</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select...</option>
+                        <option value="1">Male (1)</option>
+                        <option value="0">Female (0)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cp">Chest Pain Type (0-3)</label>
+                    <select id="cp" name="cp" required>
+                        <option value="">Select...</option>
+                        <option value="0">0 = Typical Angina</option>
+                        <option value="1">1 = Atypical Angina</option>
+                        <option value="2">2 = Non-anginal Pain</option>
+                        <option value="3">3 = Asymptomatic</option>
+                    </select>
+                    <div class="info-text">Choose chest pain category</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="trestbps">Resting BP (mmHg)</label>
+                    <input type="number" id="trestbps" name="trestbps" min="50" max="250" required>
+                    <div class="info-text">e.g., 120</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="chol">Cholesterol (mg/dl)</label>
+                    <input type="number" id="chol" name="chol" min="0" max="600" required>
+                    <div class="info-text">e.g., 200</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fbs">Fasting Blood Sugar > 120</label>
+                    <select id="fbs" name="fbs" required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="0">No (0)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="restecg">Resting ECG (0-2)</label>
+                    <select id="restecg" name="restecg" required>
+                        <option value="">Select...</option>
+                        <option value="0">0 = Normal</option>
+                        <option value="1">1 = ST-T Wave Abnormality</option>
+                        <option value="2">2 = Left Ventricular Hypertrophy</option>
+                    </select>
+                    <div class="info-text">Resting electrocardiographic results</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="thalach">Max Heart Rate Achieved</label>
+                    <input type="number" id="thalach" name="thalach" min="40" max="220" required>
+                    <div class="info-text">e.g., 150</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="exang">Exercise Induced Angina</label>
+                    <select id="exang" name="exang" required>
+                        <option value="">Select...</option>
+                        <option value="1">Yes (1)</option>
+                        <option value="0">No (0)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oldpeak">ST Depression (0-6.2)</label>
+                    <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" required>
+                    <div class="info-text">e.g., 1.5</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="slope">ST Slope (0-2)</label>
+                    <select id="slope" name="slope" required>
+                        <option value="">Select...</option>
+                        <option value="0">0 = Downsloping</option>
+                        <option value="1">1 = Flat</option>
+                        <option value="2">2 = Upsloping</option>
+                    </select>
+                    <div class="info-text">Slope of peak exercise ST segment</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ca">Major Vessels (0-4)</label>
+                    <select id="ca" name="ca" required>
+                        <option value="">Select...</option>
+                        <option value="0">0 = No Vessels</option>
+                        <option value="1">1 = One Vessel</option>
+                        <option value="2">2 = Two Vessels</option>
+                        <option value="3">3 = Three Vessels</option>
+                        <option value="4">4 = Four Vessels</option>
+                    </select>
+                    <div class="info-text">Number of vessels colored by fluoroscopy</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="thal">Thalassemia (0-3)</label>
+                    <select id="thal" name="thal" required>
+                        <option value="">Select...</option>
+                        <option value="0">0 = None</option>
+                        <option value="1">1 = Fixed Defect</option>
+                        <option value="2">2 = Reversible Defect</option>
+                        <option value="3">3 = Normal</option>
+                    </select>
+                    <div class="info-text">Thalassemia test result</div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="predict-btn">🔍 Predict</button>
+                <button type="reset" class="reset-btn">Clear</button>
+            </div>
+        </form>
+        
+        <div id="resultContainer" class="result-container">
+            <div class="loader" id="loader"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="risk-percentage">
+                <span class="risk-label">Risk Level:</span>
+                <span id="riskValue" style="font-weight: 700; color: #667eea;"></span>
+            </div>
+            <div id="healthMessage" style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.5); border-radius: 8px; line-height: 1.6;"></div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultContainer = document.getElementById('resultContainer');
+            const loader = document.getElementById('loader');
+            const resultTitle = document.getElementById('resultTitle');
+            const riskValue = document.getElementById('riskValue');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loader
+            loader.style.display = 'block';
+            resultContainer.style.display = 'block';
+            resultContainer.className = 'result-container';
+            resultTitle.textContent = 'Processing...';
+            errorMessage.style.display = 'none';
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                loader.style.display = 'none';
+                
+                if (result.success) {
+                    resultTitle.textContent = result.prediction;
+                    riskValue.textContent = result.risk + '%';
+                    const healthMessage = document.getElementById('healthMessage');
+                    
+                    if (result.prediction.includes('Detected')) {
+                        resultContainer.className = 'result-container danger';
+                        
+                        // High risk suggestions
+                        if (result.risk >= 70) {
+                            healthMessage.innerHTML = `
+                                <strong>⚠️ High Risk Detected</strong><br><br>
+                                <strong>Immediate Action Required:</strong><br>
+                                • Consult a cardiologist as soon as possible<br>
+                                • Get a comprehensive cardiac evaluation<br>
+                                • Follow prescribed medications strictly<br>
+                                • Monitor blood pressure and cholesterol regularly<br>
+                                • Avoid strenuous physical activities until cleared by doctor<br><br>
+                                <strong>Lifestyle Changes:</strong><br>
+                                • Adopt a low-sodium, heart-healthy diet<br>
+                                • Quit smoking and limit alcohol consumption<br>
+                                • Manage stress through meditation or yoga<br>
+                                • Maintain healthy weight (BMI 18.5-24.9)
+                            `;
+                        } else {
+                            healthMessage.innerHTML = `
+                                <strong>⚠️ Moderate Risk Detected</strong><br><br>
+                                <strong>Recommended Actions:</strong><br>
+                                • Schedule a check-up with your doctor<br>
+                                • Get regular heart health screenings<br>
+                                • Monitor your blood pressure weekly<br>
+                                • Keep cholesterol levels in check<br><br>
+                                <strong>Prevention Tips:</strong><br>
+                                • Exercise 30 minutes daily (walking, swimming)<br>
+                                • Eat more fruits, vegetables, and whole grains<br>
+                                • Reduce saturated fats and trans fats<br>
+                                • Manage stress and get 7-8 hours of sleep<br>
+                                • Limit salt intake to less than 2,300mg/day
+                            `;
+                        }
+                    } else {
+                        resultContainer.className = 'result-container success';
+                        
+                        if (result.risk < 30) {
+                            healthMessage.innerHTML = `
+                                <strong>✅ Excellent! You're Healthy</strong><br><br>
+                                <strong>Great News:</strong> Your heart health parameters look good!<br><br>
+                                <strong>Maintain Your Health:</strong><br>
+                                • Continue regular exercise (150 min/week)<br>
+                                • Keep eating a balanced, nutritious diet<br>
+                                • Stay hydrated - drink 8 glasses of water daily<br>
+                                • Get annual health check-ups<br>
+                                • Maintain a healthy weight<br>
+                                • Manage stress through relaxation techniques<br>
+                                • Get adequate sleep (7-9 hours)<br>
+                                • Stay socially active and positive
+                            `;
+                        } else {
+                            healthMessage.innerHTML = `
+                                <strong>✓ Good Health Status</strong><br><br>
+                                <strong>Keep It Up!</strong> No significant heart disease risk detected.<br><br>
+                                <strong>Stay Healthy with:</strong><br>
+                                • Regular physical activity (30 min/day)<br>
+                                • Balanced diet with less processed foods<br>
+                                • Monitor blood pressure occasionally<br>
+                                • Limit caffeine and alcohol<br>
+                                • Don't smoke<br>
+                                • Regular health screenings<br>
+                                • Maintain healthy lifestyle habits
+                            `;
+                        }
+                        resultContainer.className = 'result-container success';
+                    }
+                } else {
+                    resultContainer.className = 'result-container danger';
+                    resultTitle.textContent = '❌ Error';
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'Error: ' + result.error;
+                }
+            } catch (error) {
+                loader.style.display = 'none';
+                resultContainer.className = 'result-container danger';
+                resultTitle.textContent = '❌ Error';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Network error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
