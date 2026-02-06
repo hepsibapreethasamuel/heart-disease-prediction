@@ -1,4 +1,4 @@
-❤️ Heart Disease Prediction System
+#❤️ Heart Disease Prediction System
 
 An end-to-end Machine Learning web application for predicting heart disease using a Random Forest classifier, integrated with MySQL and deployed via Flask.
 
