@@ -225,5 +225,5 @@ Not intended to replace professional medical advice.
 
 ## 👩‍💻 Author
 
-Hepsiba Preetha  
+Hepsiba Preetha Samuel
 B.Tech Artificial Intelligence & Data Science
