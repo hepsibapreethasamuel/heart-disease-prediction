@@ -49,4 +49,56 @@ Extreme medical values are evaluated **BEFORE ML**:
 
 If triggered:
 
+🚨 CRITICAL HEART RISK – Seek Immediate Medical Care
+
+These values are **not treated as ML outliers**.
+
+---
+
+### 2️⃣ Machine Learning (Secondary Layer)
+
+If no critical rules fire:
+
+- Input passed to Random Forest  
+- Prediction generated  
+- Risk probability displayed  
+
+This creates a **Hybrid Clinical + ML System**.
+
+---
+
+## 🧩 Tech Stack
+
+- Python  
+- Flask  
+- Scikit-learn  
+- Pandas  
+- MySQL  
+- SQLAlchemy  
+- HTML / CSS  
+
+---
+
+## 🏗 Architecture Workflow
+
+```text
+Public Dataset
+│
+├── Uploaded to MySQL Database
+│
+├── Loaded into Pandas DataFrame
+│
+├── Random Forest Model Training
+│
+├── Model Saved (heart_rf_model.pkl)
+│
+├── Flask Web Application
+│
+├── User Inputs Clinical Data
+│
+├── Medical Rule Engine Validation
+│
+├── ML Prediction (Random Forest)
+│
+└── Prediction Stored Back in MySQL
 
