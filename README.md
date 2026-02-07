@@ -102,3 +102,32 @@ Public Dataset
 │
 └── Prediction Stored Back in MySQL
 
+---
+## 📁 Project Structure
+
+```text
+heart-disease-prediction/
+│
+├── app.py                 # Flask web application
+├── train_rf_model.py     # Random Forest model training
+├── upload_db.py          # CSV dataset → MySQL
+├── heart_rf_model.pkl    # Trained ML model
+│
+├── templates/
+│   └── index.html        # Frontend UI
+│
+├── screenshots/
+│   ├── ui.png            # Web interface
+│   ├── prediction.png   # Prediction result
+│   └── database.png     # MySQL database view
+│
+└── README.md             # Project documentation
+
+---
+## ▶ How to Run
+
+Clone repository:
+
+```bash
+git clone https://github.com/yourusername/heart-disease-prediction.git
+
