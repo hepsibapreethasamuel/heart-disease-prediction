@@ -227,6 +227,7 @@ This system is for academic demonstration only.
 Predictions are based on historical patterns and simplified clinical rules.
 
 Not intended to replace professional medical advice.
+
  ---
 ## 👩‍💻 Author
 
