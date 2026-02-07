@@ -102,7 +102,8 @@ Public Dataset
 │
 └── Prediction Stored Back in MySQL
 
----
+```
+
 ## 📁 Project Structure
 
 ```text
@@ -123,11 +124,75 @@ heart-disease-prediction/
 │
 └── README.md             # Project documentation
 
----
+```
 ## ▶ How to Run
 
 Clone repository:
 
 ```bash
 git clone https://github.com/yourusername/heart-disease-prediction.git
+```
 
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+
+```
+
+Run Flask app:
+
+```bash
+python app.py
+
+```
+
+Open browser:
+
+```bash
+http://127.0.0.1:8000
+
+```
+
+## 📊 Dataset
+
+1025 patient records with 13 clinical attributes:
+
+1. Age
+
+2. Sex
+
+3. Chest pain type
+
+4. Blood pressure
+
+5. Cholesterol
+
+6. Fasting blood sugar
+
+7. ECG
+
+8. Max heart rate
+
+9. Exercise angina
+
+10. ST depression
+
+11. ST slope
+
+12. Major vessels
+
+13. Thalassemia
+
+### Target:
+
+0 → No Heart Disease  
+1 → Heart Disease
+
+## 🏥 Medical Disclaimer
+
+This system is for academic demonstration only.
+
+Predictions are based on historical patterns and simplified clinical rules.
+
+Not intended to replace professional medical advice.
