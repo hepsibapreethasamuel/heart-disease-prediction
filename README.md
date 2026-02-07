@@ -103,6 +103,7 @@ Public Dataset
 └── Prediction Stored Back in MySQL
 
 ```
+---
 
 ## 📁 Project Structure
 
@@ -125,6 +126,7 @@ heart-disease-prediction/
 └── README.md             # Project documentation
 
 ```
+---
 ## ▶ How to Run
 
 Clone repository:
@@ -153,7 +155,7 @@ Open browser:
 http://127.0.0.1:8000
 
 ```
-
+---
 ## 📊 Dataset
 
 The dataset contains 13 clinical attributes:
@@ -184,6 +186,7 @@ The dataset contains 13 clinical attributes:
 
 13. Thalassemia
 
+---
 ## 📈 Model Performance
 
 - Algorithm: Random Forest Classifier
@@ -198,6 +201,7 @@ Evaluation performed using train-test split.
 0 → No Heart Disease  
 1 → Heart Disease
 
+---
 ## 🌟 Key Highlights
 
 - End-to-end ML pipeline (Dataset → DB → Model → Web App)
@@ -206,6 +210,7 @@ Evaluation performed using train-test split.
 - MySQL database integration
 - Medical safety layer for extreme values
 - Prediction history stored in database
+---
 
 ## 🎓 Learning Outcomes
 
@@ -214,7 +219,7 @@ Evaluation performed using train-test split.
 - Implemented clinical rule engine
 - Deployed Flask backend
 - Learned GitHub project management
-
+ ---
 ## 🏥 Medical Disclaimer
 
 This system is for academic demonstration only.
@@ -222,7 +227,7 @@ This system is for academic demonstration only.
 Predictions are based on historical patterns and simplified clinical rules.
 
 Not intended to replace professional medical advice.
-
+ ---
 ## 👩‍💻 Author
 
 Hepsiba Preetha Samuel
